@@ -26,6 +26,8 @@ Route::get('/complaint', [StudentController::class, 'complaint'])->name('complai
 Route::post('/complaint/store', [StudentController::class, 'storeComplaint'])->name('complaint.store');
 Route::get('/complaint/{complaint}/delete', [StudentController::class, 'destroy']);
 Route::get('/accommodation', [StudentController::class, 'accommodation'])->name('accommodation');
+Route::get('/searchScammer', [StudentController::class, 'search'])->name('student.search');
+
 
 
 

@@ -108,7 +108,7 @@
             </div>
         </div>
         
-
+{{-- 
         <div class="col-12 mt-3">
             <div class="card">
                 <div class="card-body">
@@ -123,31 +123,39 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label for="accoType" class="form-label">Accomodation Type:</label>
+                            <select class="form-select" id="accoType" name="accoType" required>
+                                <option value="">Select accommodation type</option>
+                                <option value="Rental House">Rental House</option>
+                                <option value="Parents house">Parents house</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="address" class="form-label">Address:</label>
-                            <input type="text" class="form-control" id="address" name="address" value="{{ $rental_house->address ?? '' }}" required>
+                            <input type="text" class="form-control" id="address" name="accoAddress"required>
                         </div>
                         <div class="mb-3">
                             <label for="city" class="form-label">City:</label>
-                            <input type="text" class="form-control" id="city" name="city" value="{{ $rental_house->city ?? '' }}" required>
+                            <input type="text" class="form-control" id="city" name="accoCity"required>
                         </div>
                         <div class="mb-3">
                             <label for="poscode" class="form-label">Poscode:</label>
-                            <input type="text" class="form-control" id="poscode" name="poscode" value="{{ $rental_house->poscode ?? '' }}" required>
+                            <input type="text" class="form-control" id="poscode" name="accoPoscode"required>
                         </div>
                         <div class="mb-3">
                             <label for="state" class="form-label">State:</label>
-                            <input type="text" class="form-control" id="state" name="state" value="{{ $rental_house->state ?? '' }}" required>
+                            <input type="text" class="form-control" id="state" name="accoState"required>
                         </div>
                         <div class="mb-3">
                             <label for="contactNo" class="form-label">Contact No:</label>
-                            <input type="text" class="form-control" id="contactNo" name="contactNo" value="{{ $rental_house->contactNo ?? '' }}" required>
+                            <input type="text" class="form-control" id="contactNo" name="emergencyContactNo" required>
                         </div>
                         <button type="submit" class="btn" style="background-color: #41968B; color:white;">Update Rental House Info</button>
                     </form>
                 </div>
             </div>
         </div>
-        
+         --}}
 
 
 

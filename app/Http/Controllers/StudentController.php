@@ -100,22 +100,24 @@ class StudentController extends Controller
     
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'sem' => 'required|in:Semester 1 2023/2024,Semester 2 2023/2024',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'poscode' => 'required|string|max:10', // Adjust max length according to your needs
-            'state' => 'required|string|max:255',
-            'contactNo' => 'required|string|max:20', // Adjust max length according to your needs
+            'sem' => 'required|in:Semester 1 2023/2024','Semester 2 2023/2024',
+            'accoType' => 'required|string|max:255',
+            'accoAddress' => 'required|string|max:255',
+            'accoCity' => 'required|string|max:255',
+            'accoPoscode    ' => 'required|string|max:10', // Adjust max length according to your needs
+            'accoState' => 'required|string|max:255',
+            'emergencyContactNo' => 'required|string|max:20', // Adjust max length according to your needs
         ]);
     
         // Create a new rental house record using the validated data
         $rental_house = new RentalHouse;
         $rental_house->sem = $validatedData['sem'];
-        $rental_house->address = $validatedData['address'];
-        $rental_house->city = $validatedData['city'];
-        $rental_house->poscode = $validatedData['poscode'];
-        $rental_house->state = $validatedData['state'];
-        $rental_house->contactNo = $validatedData['contactNo'];
+        $rental_house->accoType = $validatedData['accoType'];
+        $rental_house->accoAddress = $validatedData['accoAddress'];
+        $rental_house->accoCity = $validatedData['accoCity'];
+        $rental_house->accoPoscode   = $validatedData['accoPoscode    '];
+        $rental_house->accoState = $validatedData['accoState'];
+        $rental_house->emergencyContactNo = $validatedData['emergencyContactNo'];
     
         // Associate the rental house with the authenticated user
         $rental_house->userID = auth()->id();     
@@ -172,6 +174,30 @@ class StudentController extends Controller
     
         return redirect()->route('profile');
     }
+
+
+        
+    public function search(Request $request)
+    {
+        $user = $request->user();
+        $searchedPhoneNo = $request->input('phoneNo');
+        $totalCount = null;
+    
+        if ($searchedPhoneNo) {
+            $totalCount = Complaint::where('landlordPhoneNo', $searchedPhoneNo)->count();
+        }
+    
+        return view('Student.searchScammer', [
+            'user' => $user,
+            'searchedPhoneNo' => $searchedPhoneNo,
+            'totalCount' => $totalCount,
+            'showModal' => isset($searchedPhoneNo)
+        ]);
+    }
+    
+
+    
+    
     
     
     
