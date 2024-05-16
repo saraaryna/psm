@@ -51,7 +51,7 @@ class StudentController extends Controller
     {
         $user = $request->user();
         $property = Property::where('propertyID', $id)->firstOrFail();
-        $property = Property::with('complaints')->findOrFail($id);
+        // $property = Property::with('complaints')->findOrFail($id);
         return view('Student.viewProperty', [
             'user' => $user,
             'property' => $property,
@@ -208,5 +208,8 @@ class StudentController extends Controller
     
         return redirect()->back()->with('success', 'Complaint deleted successfully');
     }
+
+
+    
     
 }

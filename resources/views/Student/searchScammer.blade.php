@@ -5,17 +5,19 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Search Complaint by Landlord Phone Number
-        </h1>
+            Seach Scammer by Phone Number
+        </h1>    
     </div>
     <div class="row">
         <div class="col-12">
-            <form method="GET" action="{{ route('student.search') }}">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="phoneNo" placeholder="Enter Landlord Phone Number" required>
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </div>
-            </form>
+            <div class="d-flex justify-content-center">
+                <form method="GET" action="{{ route('student.search') }}">
+                    <div class="input-group mb-12">
+                        <input type="text" class="form-control" name="phoneNo" placeholder="Enter Phone Number" required>
+                        <button class="btn btn-info" style="background-color: white; color: #09888f;" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

@@ -66,12 +66,13 @@ class AdminController extends Controller
     public function complaint(Request $request)
     {
         $user = $request->user();
-        $complaint = Complaint::all();
-        $property = Property::all();
-        return view('Admin.complaint',[
+        $complaints = Complaint::withCountOfReports()->get();
+        $allComplaints = Complaint::all();
+    
+        return view('Admin.complaint', [
             'user' => $user,
-            'property' => $property,
-            'complaint' => $complaint
+            'complaints' => $complaints,
+            'allComplaints' => $allComplaints,
         ]);
     }
 
@@ -80,10 +81,17 @@ class AdminController extends Controller
         $user = $request->user();
         $complaint = Complaint::all();
         $property = Property::all();
+
+        $facultyData = $this->getFacultyData();
+        $yearData = $this->getYearData();
         return view('Admin.report',[
             'user' => $user,
             'property' => $property,
-            'complaint' => $complaint
+            'complaint' => $complaint,
+            'facultyLabels' => $facultyData['labels'],
+            'facultyData' => $facultyData['data'],
+            'yearLabels' => $yearData['labels'],
+            'yearData' => $yearData['data'],
         ]);
     }
 
@@ -135,14 +143,29 @@ class AdminController extends Controller
         ]);
     }
     
-    public function update(UpdateAdminRequest $request, Admin $admin)
+    protected function getFacultyData()
     {
-        //
+        $users = User::all();
+        $facultyCounts = $users->groupBy('faculty')->map(function ($group) {
+            return $group->count();
+        });
+
+        return [
+            'labels' => $facultyCounts->keys()->toArray(),
+            'data' => $facultyCounts->values()->toArray(),
+        ];
     }
 
-
-    public function destroy(Admin $admin)
+    protected function getYearData()
     {
-        //
+        $users = User::all();
+        $yearCounts = $users->groupBy('year')->map(function ($group) {
+            return $group->count();
+        });
+
+        return [
+            'labels' => $yearCounts->keys()->toArray(),
+            'data' => $yearCounts->values()->toArray(),
+        ];
     }
 }

@@ -115,7 +115,7 @@
                         <div class="d-inline-block dropdown show">
                             <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
                                 <i class="align-middle" data-feather="more-vertical"></i>
-                            </a>
+                            </a>    
 
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#">Action</a>
@@ -134,6 +134,7 @@
             </div>
         </div>
     </div>
+    
 
 
 

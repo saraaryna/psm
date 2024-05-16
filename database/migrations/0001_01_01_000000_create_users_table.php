@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('studentID')->unique();
             $table->string('ic')->unique();
             $table->enum('program', ['Diploma in Computer Science','Bachelor of Computer Science (Software Engineering) with Honours', 'Bachelor of Computer Science (Computer Systems & Networking) with Honours', 'Bachelor of Computer Science (Graphics & Multimedia Technology) with Honours','Bachelor of Computer Science (Cyber Security) with Honours']);
-            $table->string('faculty')->default('Faculty of Computing');
+            $table->string('faculty', ['Faculty of Electrical and Electronics Engineering Technology','Faculty of Mechanical and Automotive Engineering Technology','Faculty of Manufacturing and Mechatronic Engineering Technology','Faculty of Computing']);
             $table->enum('year', ['1', '2', '3','4','5']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

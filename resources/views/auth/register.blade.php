@@ -102,6 +102,24 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <label for="faculty" class="col-md-4 col-form-label text-md-end">{{ __('Faculty') }}</label>
+                            <div class="col-md-6">
+                                <select id="faculty" class="form-control @error('faculty') is-invalid @enderror" name="faculty" required autocomplete="faculty">
+                                    <option value="">Select Faculty</option>
+                                    <option value="Faculty of Electrical and Electronics Engineering Technology" {{ old('faculty') == 'Faculty of Electrical and Electronics Engineering Technology' ? 'selected' : '' }}>Faculty of Electrical and Electronics Engineering Technology</option>
+                                    <option value="Faculty of Mechanical and Automotive Engineering Technology" {{ old('faculty') == 'Faculty of Mechanical and Automotive Engineering Technology' ? 'selected' : '' }}>Faculty of Mechanical and Automotive Engineering Technology</option>
+                                    <option value="Faculty of Manufacturing and Mechatronic Engineering Technology" {{ old('faculty') == 'Faculty of Manufacturing and Mechatronic Engineering Technology' ? 'selected' : '' }}>Faculty of Manufacturing and Mechatronic Engineering Technology</option>
+                                    <option value="Faculty of Computing" {{ old('faculty') == 'Faculty of Computing' ? 'selected' : '' }}>Faculty of Computing</option>
+                                </select>
+                                @error('faculty')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         
                         <div class="row mb-3">
                             <label for="program" class="col-md-4 col-form-label text-md-end">{{ __('Program') }}</label>

@@ -10,8 +10,9 @@
     </div>
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-            </div>
+            {{-- <div class="card-header">
+                <a href="#" class="btn btn-info" style="float: right; background-color: #09888f; color:white;" data-bs-toggle="modal" data-bs-target="#addComplaint">+ Add Complaint</a>
+            </div> --}}
             <div class="card-body">
                 <table id="datatables-buttons" class="table table-striped" style="width:100%">
                     <thead>
@@ -26,27 +27,35 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($allComplaints as $complaint)
                         <tr>
-                        @foreach($complaint as $complaint)
-                        <td class="text-xs">{{ $loop->index + 1 }}</td>
-                        <td class="text-xs">{{$complaint->created_at}}</td>
-                        <td class="text-xs">{{$complaint->landlordPhoneNo}}</td>
-                        <td class="text-xs">{{$complaint->complaintDesc}}</td>
-                        <td class="text-xs">{{$complaint->complaintImage}}</td>
-                        <td class="text-xs">2</td>
-                        <td class="table-action">
-                            <a href="/viewProfile" data-bs-target="#modalDetails-{{ $complaint->id }}"><i
-                                class="align-middle fas fa-fw fa-eye"></i></i></a>
-                        </td>
-                    </tr>    
-                    @endforeach  
-            </tbody>
-        </table>
+                            <td class="text-xs">{{ $loop->index + 1 }}</td>
+                            <td class="text-xs">{{ $complaint->created_at }}</td>
+                            <td class="text-xs">{{ $complaint->landlordPhoneNo }}</td>
+                            <td class="text-xs">{{ $complaint->complaintDesc }}</td>
+                            <td class="text-xs">
+                                <a href="/storage/{{ $complaint->complaintImage }}" target="_blank">View</a>
+                            </td>
+                            <td class="text-xs">
+                                @foreach($complaints as $reportCount)
+                                    @if($reportCount->landlordPhoneNo === $complaint->landlordPhoneNo)
+                                        {{ $reportCount->report_count }}
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="table-action">
+                                <a href="/complaint/{{ $complaint->id }}/delete" class="delete-link">
+                                    <i class="align-middle fas fa-fw fa-trash"></i>
+                                </a>                                                      
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-
 
 
 

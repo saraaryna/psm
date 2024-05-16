@@ -20,7 +20,6 @@
                             <th>Property Name</th>
                             <th>Property Type</th>
                             <th>Owner Phone No.</th>
-                            <th>No Complaint</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -31,7 +30,6 @@
                         <td class="text-xs"><a href="{{ route('showPropertyStud', ['id' => $property->propertyID]) }}">{{$property->propertyName}}</a></td>
                         <td class="text-xs">{{$property->propertyType}}</td>
                         <td class="text-xs">{{$property->ownerPhoneNo}}</td>
-                        <td class="text-xs">{{ $property->complaints->count() }}
                          </td>
                         <td class="table-action">
                             <a href="{{ route('showPropertyStud', ['id' => $property->propertyID]) }}"><i class="align-middle fas fa-fw fa-eye"></i></a>

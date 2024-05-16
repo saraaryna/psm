@@ -27,6 +27,7 @@ class RegisterController extends Controller
             'studentID' => ['required', 'string', 'max:255', 'unique:users'],
             'ic' => ['required', 'string', 'max:255'],
             'program' => ['required', 'string', 'max:255'],
+            'faculty' => ['required', 'string', 'max:255'],
             'year' => ['required', 'in:1,2,3,4,5'], // Validate against enum values
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -41,7 +42,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'ic' => $data['ic'],
             'program' => $data['program'],
-            'faculty' => 'Faculty of Computing', // Default value for faculty
+            'faculty' => $data['faculty'],
             'year' => $data['year'],
             'password' => Hash::make($data['password']),
         ]);
