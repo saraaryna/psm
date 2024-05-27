@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('studentID')->unique();
+            $table->string('studentID')->nullable();
             $table->string('ic')->unique();
-            $table->enum('program', ['Diploma in Computer Science','Bachelor of Computer Science (Software Engineering) with Honours', 'Bachelor of Computer Science (Computer Systems & Networking) with Honours', 'Bachelor of Computer Science (Graphics & Multimedia Technology) with Honours','Bachelor of Computer Science (Cyber Security) with Honours']);
-            $table->string('faculty', ['Faculty of Electrical and Electronics Engineering Technology','Faculty of Mechanical and Automotive Engineering Technology','Faculty of Manufacturing and Mechatronic Engineering Technology','Faculty of Computing']);
-            $table->enum('year', ['1', '2', '3','4','5']);
+            $table->enum('program', ['Diploma in Computer Science','Bachelor of Computer Science (Software Engineering) with Honours', 'Bachelor of Computer Science (Computer Systems & Networking) with Honours', 'Bachelor of Computer Science (Graphics & Multimedia Technology) with Honours','Bachelor of Computer Science (Cyber Security) with Honours'])->nullable();
+            $table->enum('faculty', ['Faculty of Electrical and Electronics Engineering Technology','Faculty of Mechanical and Automotive Engineering Technology','Faculty of Manufacturing and Mechatronic Engineering Technology','Faculty of Computing'])->nullable();
+            $table->enum('year', ['1', '2', '3','4','5'])->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

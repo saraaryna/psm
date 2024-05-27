@@ -11,6 +11,18 @@ class RentalHouse extends Model
 
     protected $table = 'rental_house'; 
 
+    protected $fillable = [
+        'sem',
+        'session',
+        'accoType',
+        'accoAddress',
+        'accoCity',
+        'accoPoscode',
+        'accoState',
+        'emergencyContactNo',
+        'userID',
+    ];
+
     // Define the relationship where a RentalHouse belongs to a User
     public function user()
     {

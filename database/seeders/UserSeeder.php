@@ -18,14 +18,27 @@ class UserSeeder extends Seeder
         User::create([
             'id' => '1',
             'name' => 'Admin JHEPA',
-            'studentID' => 'ADM21146',
+            'studentID' => null,
             'ic' => '981010010678',
-            'program' => 'Diploma in Computer Science',
-            'faculty' => 'Faculty of Computing',
-            'year' => '4',
+            'program' => null,
+            'faculty' => null,
+            'year' => null,
             'role' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin123456789'),
+        ]);
+
+        User::create([
+            'id' => '2',
+            'name' => 'Sara Aryna',
+            'studentID' => 'CB21146 ',
+            'ic' => '010516140274',
+            'program' => 'Bachelor of Computer Science (Software Engineering) with Honours',
+            'faculty' => 'Faculty of Computing',
+            'year' => '4',
+            'role' => 'Student',
+            'email' => 'sara@gmail.com',
+            'password' => Hash::make('sara123456789'),
         ]);
     }
 }

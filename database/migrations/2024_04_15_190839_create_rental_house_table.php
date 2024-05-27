@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('userID'); // Foreign Key
             $table->foreign('userID')->references('id')->on('users');
-            $table->enum('sem', ['Semester 1 2023/2024','Semester 2 2023/2024']);
-            $table->string('accoType');
+            $table->enum('sem', ['Semester 1','Semester 2']);
+            $table->enum('session', ['2023/2024','2024/2025','2025/2026']);
+            $table->string('people');
+            $table->enum('accoType', ['Rental House','Parents House']);
             $table->string('accoAddress');
             $table->string('accoCity');
             $table->string('accoPoscode');

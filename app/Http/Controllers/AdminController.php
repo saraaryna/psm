@@ -168,4 +168,53 @@ class AdminController extends Controller
             'data' => $yearCounts->values()->toArray(),
         ];
     }
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'propertyName' => 'required|string',
+            'propertyType' => 'nullable|string',
+            'propertyAddress' => 'nullable|string',
+            'city' => 'nullable|string',
+            'poscode' => 'nullable|string',
+            'state' => 'nullable|string',
+            'noPeople' => 'nullable|string',
+            'bedroom' => 'nullable|string',
+            'bathroom' => 'nullable|string',
+            'gender' => 'nullable|string',
+            'race' => 'nullable|string',
+            'propertyFurnish' => 'nullable|array', 
+            'propertyFurnish.*' => 'string', 
+            'propertyImage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'propertyRentPrice' => 'nullable|string',
+            'propertyDesc' => 'nullable|string',
+            'ownerPhoneNo' => 'nullable|string',
+        ]);
+    
+        // Find the existing property by ID
+        $property = Property::where('propertyID', $id)->firstOrFail();
+            
+        // If propertyFurnish is provided, convert it to a string
+        if (isset($validatedData['propertyFurnish'])) {
+            $propertyFurnish = implode(' | ', $validatedData['propertyFurnish']);
+            $validatedData['propertyFurnish'] = $propertyFurnish;
+        }
+    
+        // Handle image upload if a new image is provided
+        if ($request->hasFile('propertyImage')) {
+            // Store the new image and get the path
+            $imagePath = $request->file('propertyImage')->store('banner');
+            // Add the new image path to the validated data
+            $validatedData['propertyImage'] = $imagePath;
+        } else {
+            // If no new image is provided, use the existing image
+            $validatedData['propertyImage'] = $property->propertyImage;
+        }
+    
+        // Update the property with validated data
+        $property->update($validatedData);
+    
+        // Redirect back to the properties list with a success message
+        return redirect('/property-Admin')->with('success', 'Property updated successfully');
+    }
 }

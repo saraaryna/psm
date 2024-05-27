@@ -37,65 +37,179 @@
                         <td class="text-xs">2</td>
                         <td class="table-action">
                             <a href="{{ route('showProperty', ['id' => $property->propertyID]) }}"><i class="align-middle fas fa-fw fa-eye"></i></a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#update-{{ $property->propertyID }}"><i class="align-middle fas fa-fw fa-pen"></i></i></a>
-                            <a href="/KP-appForm/{{$property->propertyID}}/delete" class="delete-link">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#update-{{ $property->propertyID }}"><i class="align-middle fas fa-fw fa-pen"></i></a>                            <a href="/KP-appForm/{{$property->propertyID}}/delete" class="delete-link">
                                 <i class="align-middle fas fa-fw fa-trash"></i>
                             </a>                        
                         </td>
                     </tr>        
-                <!-- Modal Kemaskini -->
-                <div class="modal fade" id="update-{{ $property->appID }}" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">New property</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body m-3">
-                                <form method="POST" action="/appEditKP/{{ $property->appID }}" enctype="multipart/form-data">
-                                    @csrf 
-                                    @method('PUT')
-                                    <input type="hidden" name="appID" value="{{$property->appID}}">
-                                    <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control" id="appName" name="appName" value="{{ $user->userName }}"required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="contactNumber">Contact Number</label>
-                                        <input type="text" class="form-control" id="appPhoneNum" name="appPhoneNum" value="{{ $user->userPhoneNum }}"required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="userEmail">Business Type</label>
-                                        <select class="form-control" id="appBusinessType" name="appBusinessType" value="{{$property->appBusinessType}}" required>
-                                            <option disabled selected value="Select Business Type">Business Type</option>
-                                            <option @if ($property->appBusinessType == 'Food') selected @endif value="Food">Food
-                                            <option @if ($property->appBusinessType == 'Beverages') selected @endif value="Beverages">Beverages 
-                                            <option @if ($property->appBusinessType == 'Others') selected @endif value="Others">Others
-                                        </select>                    
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="appKioskNum">Kiosk Number</label>
-                                        <select class="form-control" id="appKioskNum" name="appKioskNum" value="{{$property->appKioskNum}}" required>
-                                            <option disabled selected value="Select Kiosk Number">Select Kiosk Number</option>
-                                            <option @if ($property->appKioskNum == '1') selected @endif value="1">1
-                                            <option @if ($property->appKioskNum == '2') selected @endif value="2">2 
-                                            <option @if ($property->appKioskNum == '3') selected @endif value="3">3
-                                            <option @if ($property->appKioskNum == '4') selected @endif value="4">4
-                                        </select>                    
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="appBusinessPeriod">Business Period</label>
-                                        <input type="datetime-local" class="form-control" id="appBusinessPeriod" name="appBusinessPeriod" value="{{$property->appBusinessPeriod}}"required>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-info" name="update">UPDATE</button>
-                                    </div>
-                                </form>
-                            </div>
+            <!-- Modal Update -->
+            <div class="modal fade" id="update-{{ $property->propertyID }}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Property</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <form action="{{ route('properties.update', $property->propertyID) }}" method="POST">
+                            @csrf
+                            @method('PUT')                            
+                            <div class="modal-body m-3">
+                                <div class="form-step step-1">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="propertyName">Property Name</label>
+                                                <input type="text" class="form-control" id="propertyName" name="propertyName" value="{{ $property->propertyName }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="form-group">
+                                                <label for="propertyAddress">Property Address</label>
+                                                <input type="text" class="form-control" id="propertyAddress" name="propertyAddress" value="{{ $property->propertyAddress }}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="propertyType">Property Type</label>
+                                                <select class="form-control" id="propertyType" name="propertyType">
+                                                    <option value="" disabled>Select Property Type</option>
+                                                    <option value="Landed" {{ $property->propertyType == 'Landed' ? 'selected' : '' }}>Landed</option>
+                                                    <option value="Bungalow" {{ $property->propertyType == 'Bungalow' ? 'selected' : '' }}>Bungalow</option>
+                                                    <option value="Flat" {{ $property->propertyType == 'Flat' ? 'selected' : '' }}>Flat</option>
+                                                    <option value="Apartment" {{ $property->propertyType == 'Apartment' ? 'selected' : '' }}>Apartment</option>
+                                                    <option value="Condo" {{ $property->propertyType == 'Condo' ? 'selected' : '' }}>Condo</option>
+                                                </select>
+                                            </div>
+                                        </div>                            
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="city">City</label>
+                                                <input type="text" class="form-control" id="city" name="city" value="{{ $property->city }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="poscode">Poscode</label>
+                                                <input type="text" class="form-control" id="poscode" name="poscode" value="{{ $property->poscode }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="state">State</label>
+                                                <input type="text" class="form-control" id="state" name="state" value="{{ $property->state }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="bedroom">Bedroom</label>
+                                                <input type="number" class="form-control" id="bedroom" name="bedroom" value="{{ $property->bedroom }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="form-group">
+                                                <label for="bathroom">Bathroom</label>
+                                                <input type="number" class="form-control" id="bathroom" name="bathroom" value="{{ $property->bathroom }}" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="gender">Gender preferred</label>
+                                                <select class="form-control" id="gender" name="gender">
+                                                    <option value="" disabled>Select gender</option>
+                                                    <option value="Female" {{ $property->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                                    <option value="Male" {{ $property->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                                    <option value="Both" {{ $property->gender == 'Both' ? 'selected' : '' }}>Both</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="race">Race preferred</label>
+                                                <select class="form-control" id="race" name="race">
+                                                    <option value="" disabled>Select race</option>
+                                                    <option value="Malay" {{ $property->race == 'Malay' ? 'selected' : '' }}>Malay</option>
+                                                    <option value="Chinese" {{ $property->race == 'Chinese' ? 'selected' : '' }}>Chinese</option>
+                                                    <option value="Indian" {{ $property->race == 'Indian' ? 'selected' : '' }}>Indian</option>
+                                                    <option value="All" {{ $property->race == 'All' ? 'selected' : '' }}>All</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="propertyRentPrice">Property Rent Price (monthly)</label>
+                                                <input type="text" class="form-control" id="propertyRentPrice" name="propertyRentPrice" value="{{ $property->propertyRentPrice }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Property Furnish</label><br>
+                                                <div class="row">
+                                                    @php
+                                                        $furnishes = ['Internet', 'Bed', 'Dining table', 'Water heater', 'Refrigerator', 'Washing machine'];
+                                                    @endphp
+                                                    @foreach($furnishes as $furnish)
+                                                    <div class="col-md-4">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="{{ strtolower(str_replace(' ', '', $furnish)) }}" name="propertyFurnish[]" value="{{ $furnish }}" {{ in_array($furnish, explode(',', $property->propertyFurnish)) ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="{{ strtolower(str_replace(' ', '', $furnish)) }}">{{ $furnish }}</label>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>   
+                                        </div>                             
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="ownerPhoneNo">Owner's Phone Number</label>
+                                                <input type="text" class="form-control" id="ownerPhoneNo" name="ownerPhoneNo" value="{{ $property->ownerPhoneNo }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="noPeople">Number max of People</label>
+                                                <input type="number" class="form-control" id="noPeople" name="noPeople" value="{{ $property->noPeople }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="propertyDesc">Description</label>
+                                                <textarea class="form-control" id="propertyDesc" name="propertyDesc" rows="3">{{ $property->propertyDesc }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    
+                                <div class="form-step step-2" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="propertyImages">Upload Images</label>
+                                                <input type="file" class="form-control" id="propertyImage" name="propertyImage">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-prev" style="display: none;">Previous</button>
+                                <button type="button" class="btn btn-primary btn-next">Next</button>
+                                <button type="submit" class="btn btn-primary btn-submit" style="display: none;" name="updateProperty">UPDATE</button>
+                            </div>
+                        </form>
                     </div>
-                @endforeach
+                </div>
+            </div>
+            @endforeach           
             </tbody>
         </table>
     </div>
@@ -355,6 +469,7 @@
         });
     });
 </script>
+
 
 
 

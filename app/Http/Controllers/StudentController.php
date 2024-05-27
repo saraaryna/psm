@@ -87,47 +87,61 @@ class StudentController extends Controller
         ]);
     }
     
-
-
-
-
-    
-
     public function store(Request $request)
     {
-        // Retrieve the rental house data from the database
-        $rentalHouse = RentalHouse::find($request->rental_house_id);
+        // Check if the user already has a rental house record
+        $rental_house = RentalHouse::where('userID', auth()->id())->first();
     
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'sem' => 'required|in:Semester 1 2023/2024','Semester 2 2023/2024',
-            'accoType' => 'required|string|max:255',
-            'accoAddress' => 'required|string|max:255',
-            'accoCity' => 'required|string|max:255',
-            'accoPoscode    ' => 'required|string|max:10', // Adjust max length according to your needs
-            'accoState' => 'required|string|max:255',
-            'emergencyContactNo' => 'required|string|max:20', // Adjust max length according to your needs
-        ]);
+        if ($rental_house) {
+            // Update the existing rental house record
+            $rental_house->update($request->all());
+            $message = 'Accommodation updated successfully';
+        } else {
+            // Create a new rental house record using the request data
+            $rental_house = new RentalHouse;
+            $rental_house->sem = $request->sem;
+            $rental_house->session = $request->session;
+            $rental_house->people = $request->people;
+            $rental_house->accoType = $request->accoType;
+            $rental_house->accoAddress = $request->address;
+            $rental_house->accoCity = $request->city;
+            $rental_house->accoPoscode = $request->poscode;
+            $rental_house->accoState = $request->state;
+            $rental_house->emergencyContactNo = $request->contactNo;
+            $rental_house->userID = auth()->id();
+            $rental_house->save();
     
-        // Create a new rental house record using the validated data
-        $rental_house = new RentalHouse;
-        $rental_house->sem = $validatedData['sem'];
-        $rental_house->accoType = $validatedData['accoType'];
-        $rental_house->accoAddress = $validatedData['accoAddress'];
-        $rental_house->accoCity = $validatedData['accoCity'];
-        $rental_house->accoPoscode   = $validatedData['accoPoscode    '];
-        $rental_house->accoState = $validatedData['accoState'];
-        $rental_house->emergencyContactNo = $validatedData['emergencyContactNo'];
+            $message = 'Accommodation added successfully';
+        }
     
-        // Associate the rental house with the authenticated user
-        $rental_house->userID = auth()->id();     
-        // Save the rental house record
-        $rental_house->save();
-        
-        // Redirect the user to the profile route
-        return redirect()->route('profile');
+        // Redirect the user to the accommodation route
+        return redirect('/accommodation')->with('success', $message);
     }
+    
 
+    public function updateAccommodation(Request $request, $id)
+    {
+        // Find the rental house record by its ID
+        $rental_house = RentalHouse::findOrFail($id);
+    
+        // Update the rental house record with the request data
+        $rental_house->sem = $request->sem;
+        $rental_house->session = $request->session;
+        $rental_house->people = $request->people;
+        $rental_house->accoType = $request->accoType;
+        $rental_house->accoAddress = $request->address;
+        $rental_house->accoCity = $request->city;
+        $rental_house->accoPoscode = $request->poscode;
+        $rental_house->accoState = $request->state;
+        $rental_house->emergencyContactNo = $request->contactNo;
+        $rental_house->save();
+    
+        // Redirect the user to the accommodation route
+        return redirect('/accommodation')->with('success', 'Accommodation updated successfully');
+    }
+    
+
+    
     public function storeComplaint(Request $request)
     {
         // Validate the incoming request data

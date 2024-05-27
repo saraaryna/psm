@@ -11,6 +11,8 @@ class Property extends Model
 
     protected $table = 'property'; 
 
+    protected $primaryKey = 'propertyID';
+
     protected $fillable = [
         'propertyName',
         'propertyType',

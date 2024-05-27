@@ -19,13 +19,14 @@ Auth::routes();
 Route::get('/Student', [StudentController::class, 'index'])->name('student.index');
 Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
 Route::put('/profile/{profile}', [StudentController::class, 'update'])->name('profile.update');
-Route::post('/profile/store', [StudentController::class, 'store'])->name('profile.store');
 Route::get('/property', [StudentController::class, 'property'])->name('property');
 Route::get('/showPropertyStud/{id}', [StudentController::class, 'showPropertyStud'])->name('showPropertyStud');
 Route::get('/complaint', [StudentController::class, 'complaint'])->name('complaint');
 Route::post('/complaint/store', [StudentController::class, 'storeComplaint'])->name('complaint.store');
 Route::get('/complaint/{complaint}/delete', [StudentController::class, 'destroy']);
 Route::get('/accommodation', [StudentController::class, 'accommodation'])->name('accommodation');
+Route::post('/accommodation/store', [StudentController::class, 'store'])->name('accommodation.store');
+Route::put('/accommodation/{accommodation}', [StudentController::class, 'updateAccommodation'])->name('accommodation.updateAccommodation');
 Route::get('/searchScammer', [StudentController::class, 'search'])->name('student.search');
 
 
@@ -37,6 +38,7 @@ Route::get('/Admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('/property-Admin', [AdminController::class, 'viewProperty'])->name('viewProperty');
 Route::get('/showProperty/{id}', [AdminController::class, 'showProperty'])->name('showProperty');
 Route::post('/property-Admin/store', [AdminController::class, 'store'])->name('properties.store');
+Route::put('/property-Admin/{id}', [AdminController::class, 'update'])->name('properties.update');
 Route::get('/manageUser-Admin', [AdminController::class, 'viewUser'])->name('viewUser');
 Route::get('/showUser/{id}', [AdminController::class, 'showUser'])->name('showUser');
 Route::get('/complaint-Admin', [AdminController::class, 'complaint'])->name('complaint');
