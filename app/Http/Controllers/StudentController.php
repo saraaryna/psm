@@ -19,8 +19,16 @@ class StudentController extends Controller
     {
         $user = $request->user();
         // $rental_house = $user->rentalHouse; // Assuming a user has one rental house
+
+        $rentalHouse = RentalHouse::where('userID', $user->id)->first();
+        $accommodationStatus = ($rentalHouse) ? 'Done' : 'Not done';
+        // Check if the user profile is completed (assuming user table stores profile information)
+        $profileStatus = ($user) ? 'Done' : 'Not done';
+
         return view('Student.index',[
             'user' => $user,
+            'profileStatus' => $profileStatus,
+            'accommodationStatus' => $accommodationStatus,
             // 'rental_house' => $rental_house,
         ]);
     }

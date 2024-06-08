@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -54,6 +55,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(RentalHouse::class, 'userID'); // Specify the correct foreign key
     }
+    public function index()
+    {
+        $facultyCounts = User::select('faculty', DB::raw('count(*) as total'))
+            ->groupBy('faculty')
+            ->pluck('total', 'faculty')
+            ->all();
     
-
+        $totalUsers = User::count();
+        $totalProperties = Property::count();
+        $totalComplaint = Complaint::count();
+    
+        return view('dashboard', compact('facultyCounts', 'totalUsers', 'totalProperties', 'totalComplaint'));
+    }
 }

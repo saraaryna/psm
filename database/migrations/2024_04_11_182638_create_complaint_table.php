@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('landlordPhoneNo');
             $table->string('complaintDesc');
-            $table->string('complaintImage');
+            $table->string('complaintImage')->nullable();
             $table->timestamps();
         });
     }

@@ -22,13 +22,13 @@
 <br>
 
 <div class="row">
-    <!-- Latest Projects section -->
-    <div class="col-6 col-md-7 col-xxl-6 d-flex order-1 order-xxl-1 ms-md-3"> <!-- Adjusted column widths and order, added ms-md-3 for left margin -->
+    <!-- Status of student details -->
+    <div class="col-6 col-md-7 col-xxl-6 d-flex order-1 order-xxl-1 ms-md-3"> 
         <div class="card flex-fill w-100">
             <div class="card-header">
                 <h5 class="card-title mb-0">User Status</h5>
             </div>
-            <div class="card-body px-4 text-center" > <!-- Added text-center class to center the content -->
+            <div class="card-body px-4 text-center" >
                 <table id="datatables-dashboard-projects" class="table table-striped my-0">
                     <thead>
                         <tr>
@@ -39,11 +39,15 @@
                     <tbody>
                         <tr>
                             <td>Profile</td>
-                            <td><span class="badge bg-success">Done</span></td>
+                            <td> <span class="badge {{ $profileStatus == 'Done' ? 'bg-success' : 'bg-warning' }}">
+                                {{ $profileStatus }}
+                            </span></td>
                         </tr>     
                         <tr>
                             <td>Accommodation</td>
-                            <td><span class="badge bg-warning">Not done</span></td>
+                            <td> <span class="badge {{ $accommodationStatus == 'Done' ? 'bg-success' : 'bg-warning' }}">
+                                {{ $accommodationStatus }}
+                            </span></td>
                         </tr>                                   
                     </tbody>
                 </table>

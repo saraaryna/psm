@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Complaint;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -19,15 +18,29 @@ class AdminController extends Controller
         $totalProperties = Property::count();
         $totalComplaint = Complaint::count();
         
+        $facultyCounts = User::select('faculty', DB::raw('count(*) as total'))
+            ->where('role', 'Student')
+            ->groupBy('faculty')
+            ->pluck('total', 'faculty')
+            ->all();
+
+        $complaintsByMonth = Complaint::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('count(*) as total')
+        )
+        ->groupBy('month')
+        ->pluck('total', 'month')
+        ->all();
+
         return view('Admin.index', [
             'user' => $user,
             'totalUsers' => $totalUsers,
             'totalProperties' => $totalProperties,
-            'totalComplaint' => $totalComplaint
+            'totalComplaint' => $totalComplaint,
+            'facultyCounts' => $facultyCounts,
+            'complaintsByMonth' => $complaintsByMonth
         ]);
     }
-
-
 
     public function viewProperty(Request $request)
     {
@@ -61,7 +74,6 @@ class AdminController extends Controller
             'rental_house' => $rental_house, 
         ]);
     }
-    
 
     public function complaint(Request $request)
     {
@@ -95,10 +107,8 @@ class AdminController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
-       
         $validatedData = $request->validate([
             'propertyName' => 'required|string',
             'propertyType' => 'nullable|string',
@@ -126,7 +136,7 @@ class AdminController extends Controller
         if ($request->hasFile('propertyImage')) {
             $imagePath = $request->file('propertyImage')->store('banner');
         }
-            $validatedData['propertyImage'] = $imagePath;
+        $validatedData['propertyImage'] = $imagePath;
     
         $property = Property::create($validatedData);
     
@@ -145,7 +155,8 @@ class AdminController extends Controller
     
     protected function getFacultyData()
     {
-        $users = User::all();
+        // Fetch users with role 'Student'
+        $users = User::where('role', 'Student')->get();
         $facultyCounts = $users->groupBy('faculty')->map(function ($group) {
             return $group->count();
         });
@@ -158,7 +169,8 @@ class AdminController extends Controller
 
     protected function getYearData()
     {
-        $users = User::all();
+        // Fetch users with role 'Student'
+        $users = User::where('role', 'Student')->get();
         $yearCounts = $users->groupBy('year')->map(function ($group) {
             return $group->count();
         });
@@ -168,6 +180,7 @@ class AdminController extends Controller
             'data' => $yearCounts->values()->toArray(),
         ];
     }
+
     public function update(Request $request, $id)
     {
         // Validate the incoming request data

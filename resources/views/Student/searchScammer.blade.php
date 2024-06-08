@@ -32,7 +32,7 @@
                 <div class="modal-body">
                     @if(isset($totalCount))
                         <p>Phone Number: {{ $searchedPhoneNo }}</p>
-                        <p>Total Complaints: {{ $totalCount }}</p>
+                        <p><b>{{ $totalCount }}</b> complaints have been made.</p>
                     @else
                         <p>No results found.</p>
                     @endif
@@ -52,3 +52,5 @@
 </div>
 
 @stop
+
+

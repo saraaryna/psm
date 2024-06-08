@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('studentID')->nullable();
             $table->string('ic')->unique();
-            $table->enum('program', ['Diploma in Computer Science','Bachelor of Computer Science (Software Engineering) with Honours', 'Bachelor of Computer Science (Computer Systems & Networking) with Honours', 'Bachelor of Computer Science (Graphics & Multimedia Technology) with Honours','Bachelor of Computer Science (Cyber Security) with Honours'])->nullable();
+            $table->enum('program', ['Diploma in Computer Science','Bachelor of Computer Science (Software Engineering) with Honours', 'Bachelor of Computer Science (Computer Systems & Networking) with Honours', 'Bachelor of Computer Science (Graphics & Multimedia Technology) with Honours','Bachelor of Computer Science (Cyber Security) with Honours','Bachelor of Electrical Engineering (Electronics) with Honours','Bachelor of Electrical Engineering Technology (Power & Machine) with Honours','Bachelor of Electrical Engineering with Honours','Diploma in Electrical and Electronics Engineering',''])->nullable();
             $table->enum('faculty', ['Faculty of Electrical and Electronics Engineering Technology','Faculty of Mechanical and Automotive Engineering Technology','Faculty of Manufacturing and Mechatronic Engineering Technology','Faculty of Computing'])->nullable();
             $table->enum('year', ['1', '2', '3','4','5'])->nullable();
             $table->string('email')->unique();
